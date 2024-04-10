@@ -9,9 +9,9 @@ spring:
     open-in-view: false
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: "jdbc:postgresql://localhost:7432/postgres"
+    url: "jdbc:postgresql://localhost:5432/Kity"
     username: "postgres"
-    password: "postgres"
+    password: "1207"
     hikari:
       connection-timeout: 60000
       maximum-pool-size: 5
