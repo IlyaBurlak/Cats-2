@@ -12,9 +12,17 @@ import java.time.LocalDate;
 
 public class HibernateApp {
     public static void main(String[] args) {
-        Configuration configuration = new Configuration().configure();
+        Configuration configuration = new Configuration();
+        configuration.addAnnotatedClass(Cat.class);
+
+        configuration.setProperty("hibernate.connection.url", "jdbc:postgresql://localhost:5432/Cat");
+        configuration.setProperty("hibernate.connection.username", "postgres");
+        configuration.setProperty("hibernate.connection.password", "1207");
+        configuration.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
+
         StandardServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
                 .applySettings(configuration.getProperties()).build();
+
         SessionFactory sessionFactory = configuration.buildSessionFactory(serviceRegistry);
         Session session = sessionFactory.openSession();
 
