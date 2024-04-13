@@ -18,8 +18,7 @@ public class HibernateApp {
         configuration.setProperty("hibernate.connection.url", "jdbc:postgresql://localhost:5432/Cat");
         configuration.setProperty("hibernate.connection.username", "postgres");
         configuration.setProperty("hibernate.connection.password", "1207");
-        configuration.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
-
+        configuration.setProperty("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
         StandardServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
                 .applySettings(configuration.getProperties()).build();
 
