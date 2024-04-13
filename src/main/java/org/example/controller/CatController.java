@@ -20,7 +20,7 @@ public class CatController {
     }
 
 
-    @GetMapping("/cats/{catId}")
+    @GetMapping("/cat/{catId}")
     public CatDto getCatById(@PathVariable Long catId) {
         return catService.getCatById(catId);
     }
@@ -31,7 +31,7 @@ public class CatController {
     }
 
 
-    @GetMapping("/cats/{color}")
+    @GetMapping("/cats/color/{color}")
     public List<Cat> getCatsByColor(@PathVariable String color) {
         return catService.getCatsByColor(color);
     }
