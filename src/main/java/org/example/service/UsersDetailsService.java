@@ -4,19 +4,20 @@ import lombok.AllArgsConstructor;
 import org.example.UserRepository;
 import org.example.entity.User;
 import org.example.security.UsersDetails;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
-
 
 @Service
 @AllArgsConstructor
 public class UsersDetailsService implements UserDetailsService {
     private final UserRepository repository;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -26,6 +27,11 @@ public class UsersDetailsService implements UserDetailsService {
     }
 
     public void addUser(User user) {
-        repository.save(user);
+        String plainPassword = user.getPassword();
+
+        if (!plainPassword.startsWith("{bcrypt}")) {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+            repository.save(user);
+        }
     }
 }
