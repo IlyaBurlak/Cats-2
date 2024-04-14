@@ -1,23 +1,23 @@
 package org.example.controller;
 
 import org.example.dto.CatDto;
-import org.example.entity.Cat;
+import org.example.entity.User;
+import org.example.security.UsersDetails;
 import org.example.service.CatService;
+import org.example.service.UsersDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-public class CatController {
+public class Controller {
 
     private final CatService catService;
 
     @Autowired
-    public CatController(CatService catService) {
+    public Controller(CatService catService) {
         this.catService = catService;
     }
 
@@ -37,5 +37,11 @@ public class CatController {
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     public List<CatDto> getCatsByColor(@PathVariable String color) {
         return catService.getCatsByColor(color);
+    }
+
+    @PostMapping("/new-user")
+    public String addUser(@RequestBody User user){
+        UsersDetailsService.addUser(user);
+        return "User is saves";
     }
 }
