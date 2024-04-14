@@ -2,7 +2,6 @@ package org.example.controller;
 
 import org.example.dto.CatDto;
 import org.example.entity.User;
-import org.example.security.UsersDetails;
 import org.example.service.CatService;
 import org.example.service.UsersDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +14,12 @@ import java.util.List;
 public class Controller {
 
     private final CatService catService;
+    private final UsersDetailsService usersDetailsService;
 
     @Autowired
-    public Controller(CatService catService) {
+    public Controller(CatService catService, UsersDetailsService usersDetailsService) {
         this.catService = catService;
+        this.usersDetailsService = usersDetailsService;
     }
 
     @GetMapping("/cat/{catId}")
@@ -41,7 +42,7 @@ public class Controller {
 
     @PostMapping("/new-user")
     public String addUser(@RequestBody User user){
-        UsersDetailsService.addUser(user);
-        return "User is saves";
+        usersDetailsService.addUser(user);
+        return "User is saved";
     }
 }

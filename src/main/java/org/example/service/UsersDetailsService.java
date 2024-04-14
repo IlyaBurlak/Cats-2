@@ -16,17 +16,16 @@ import java.util.Optional;
 @Service
 @AllArgsConstructor
 public class UsersDetailsService implements UserDetailsService {
-    @Autowired
-    private static UserRepository repository;
+    private final UserRepository repository;
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-
         Optional<User> user = repository.findByName(username);
         return user.map(UsersDetails::new)
-                .orElseThrow(() -> new UsernameNotFoundException(username + "not found"));
+                .orElseThrow(() -> new UsernameNotFoundException(username + " not found"));
     }
 
-    public static void addUser(User user){
+    public void addUser(User user) {
         repository.save(user);
     }
 }

@@ -23,10 +23,9 @@ public class UsersDetails implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         if (user.getRoles() != null && !user.getRoles().isEmpty()) {
-            return Arrays.stream(user.getRoles().split(","))
-                    .map(SimpleGrantedAuthority::new)
-                    .collect(Collectors.toList());
+            return Collections.singletonList(new SimpleGrantedAuthority(user.getRoles()));
         }
+
         return Collections.emptyList();
     }
 
