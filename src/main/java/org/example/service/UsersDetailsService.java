@@ -29,8 +29,8 @@ public class UsersDetailsService implements UserDetailsService {
     public void addUser(User user) {
         String plainPassword = user.getPassword();
 
-        if (!plainPassword.startsWith("{bcrypt}")) {
-            user.setPassword(passwordEncoder.encode(user.getPassword()));
+        if(!passwordEncoder.matches(plainPassword, user.getPassword())){
+            user.setPassword(passwordEncoder.encode(plainPassword));
             repository.save(user);
         }
     }
