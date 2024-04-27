@@ -8,16 +8,15 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
-
 @Service
 @AllArgsConstructor
 public class UsersDetailsService implements UserDetailsService {
+
     private final UserRepository repository;
-    private final PasswordEncoder passwordEncoder;
+    private final BCryptPasswordEncoder passwordEncoder;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -28,10 +27,7 @@ public class UsersDetailsService implements UserDetailsService {
 
     public void addUser(User user) {
         String plainPassword = user.getPassword();
-
-        if(!passwordEncoder.matches(plainPassword, user.getPassword())){
-            user.setPassword(passwordEncoder.encode(plainPassword));
-            repository.save(user);
-        }
+        user.setPassword(passwordEncoder.encode(plainPassword));
+        repository.save(user);
     }
 }

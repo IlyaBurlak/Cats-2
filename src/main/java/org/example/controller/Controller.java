@@ -22,6 +22,7 @@ public class Controller {
         this.usersDetailsService = usersDetailsService;
     }
 
+
     @GetMapping("/cat/{catId}")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     public CatDto getCatById(@PathVariable Long catId) {
